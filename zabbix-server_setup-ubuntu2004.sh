@@ -21,8 +21,7 @@ sudo zcat /usr/share/doc/zabbix-sql-scripts/mysql/create.sql.gz | sudo mysql -uz
 sudo sed -i "s/# DBPassword=/DBPassword=My_Password_For_SQL_zabbix/" /etc/zabbix/zabbix_server.conf
 sudo sed -i "s/# ru_RU.UTF-8 UTF-8/ru_RU.UTF-8 UTF-8/"/etc/locale.gen
 
-sudo service apache2 restart
-sudo service zabbix-server restart
-sudo update-rc.d zabbix-server enable
+sudo systemctl restart zabbix-server zabbix-agent apache2
+sudo systemctl enable zabbix-server zabbix-agent
 
 exit
