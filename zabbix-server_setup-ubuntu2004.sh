@@ -1,5 +1,9 @@
 #!/bin/bash
 
+#This script installs the Zabbix server for Ubuntu 20.04
+#Runs after installing Apache+MySQL+PHP (lamp-ubuntu2004.sh)
+#Don't forget to change password 'My_Password_For_SQL_zabbix'
+
 sudo wget https://repo.zabbix.com/zabbix/5.4/ubuntu/pool/main/z/zabbix-release/zabbix-release_5.4-1+ubuntu20.04_all.deb
 sudo dpkg -i zabbix-release_5.4-1+ubuntu20.04_all.deb
 sudo apt update
@@ -19,7 +23,8 @@ sudo mysql -uroot -e "quit"
 sudo zcat /usr/share/doc/zabbix-sql-scripts/mysql/create.sql.gz | sudo mysql -uzabbix zabbix -pMy_Password_For_SQL_zabbix
 
 sudo sed -i "s/# DBPassword=/DBPassword=My_Password_For_SQL_zabbix/" /etc/zabbix/zabbix_server.conf
-sudo sed -i "s/# ru_RU.UTF-8 UTF-8/ru_RU.UTF-8 UTF-8/"/etc/locale.gen
+# Uncomment the next line to install Russian localization
+# sudo sed -i "s/# ru_RU.UTF-8 UTF-8/ru_RU.UTF-8 UTF-8/"/etc/locale.gen
 
 sudo systemctl restart zabbix-server zabbix-agent apache2
 sudo systemctl enable zabbix-server zabbix-agent
